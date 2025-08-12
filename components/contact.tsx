@@ -1,15 +1,13 @@
 "use client"
 
-import type React from "react"
-import { useEffect, useState } from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
+import { useState, useEffect } from "react"
+import emailjs from "@emailjs/browser"
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { Mail, Linkedin, MapPin, Send, Loader2 } from "lucide-react"
-import emailjs from "@emailjs/browser"
+import { Button } from "@/components/ui/button"
+import { Loader2, Send, Mail, Linkedin, MapPin } from "lucide-react"
 
-// Read from environment variables (.env.local)
 const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || ""
 const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || ""
 const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || ""
@@ -39,33 +37,26 @@ const Contact = () => {
     if (!serviceId || !templateId || !publicKey) {
       setIsLoading(false)
       setSubmitStatus("error")
-      setErrorText("Missing EmailJS configuration. Please set NEXT_PUBLIC_EMAILJS_SERVICE_ID, NEXT_PUBLIC_EMAILJS_TEMPLATE_ID and NEXT_PUBLIC_EMAILJS_PUBLIC_KEY in .env.local, then restart the dev server.")
+      setErrorText("Missing EmailJS configuration.")
       return
     }
 
     try {
-      await emailjs.send(
-        serviceId,
-        templateId,
-        {
-          from_name: formData.name,
-          from_email: formData.email,
-          reply_to: formData.email,
-          message: formData.message,
-          to_email: "harshthakuelinkedin@gmail.com",
-          to_name: "Harsh Thakur",
-          user_name: formData.name,
-          user_email: formData.email,
-        },
-        publicKey
-      )
-
+      await emailjs.send(serviceId, templateId, formData)
       setSubmitStatus("success")
-      setFormData({ name: "", email: "", message: "" })
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Email sending failed:", error)
       setSubmitStatus("error")
-      setErrorText(typeof error?.text === "string" ? error.text : "Failed to send. Check EmailJS IDs and template variable names.")
+      if (
+        typeof error === "object" &&
+        error !== null &&
+        "text" in error &&
+        typeof (error as { text?: string }).text === "string"
+      ) {
+        setErrorText((error as { text: string }).text)
+      } else {
+        setErrorText("Failed to send. Check EmailJS IDs and template variable names.")
+      }
     } finally {
       setIsLoading(false)
     }
@@ -85,7 +76,7 @@ const Contact = () => {
           <h2 className="font-serif font-bold text-3xl sm:text-4xl text-[#1a1a1a] mb-4">Get In Touch</h2>
           <div className="w-20 h-1 bg-[#b8956a] mx-auto mb-6"></div>
           <p className="text-[#4b5563] max-w-2xl mx-auto">
-            I'm always open to discussing new opportunities, interesting projects, or just having a chat about
+            I&apos;m always open to discussing new opportunities, interesting projects, or just having a chat about
             technology.
           </p>
         </div>
@@ -188,7 +179,7 @@ const Contact = () => {
 
                 {submitStatus === "success" && (
                   <div className="p-3 bg-green-100 border border-green-400 text-green-700 rounded-md">
-                    Message sent successfully! I'll get back to you soon.
+                    Message sent successfully! I&apos;ll get back to you soon.
                   </div>
                 )}
 

@@ -9,30 +9,37 @@ const Skills = () => {
   )
 
   return (
-    <section id="skills" className="py-20 px-4 sm:px-6 lg:px-8 bg-white/30">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="font-serif font-bold text-3xl sm:text-4xl text-[#1a1a1a] mb-4">Skills & Technologies</h2>
-          <div className="w-20 h-1 bg-[#b8956a] mx-auto"></div>
+    <section
+      id="skills"
+      className="my-12 mx-auto py-12 px-2 sm:px-4 bg-white/30 rounded-xl shadow-lg max-w-3xl"
+    >
+      <div className="text-center mb-12">
+        <h2 className="font-serif font-bold text-3xl sm:text-4xl text-[#1a1a1a] mb-4">
+          Skills & Technologies
+        </h2>
+        <div className="w-20 h-1 bg-[#b8956a] mx-auto"></div>
+      </div>
+
+      <div className="space-y-8">
+        <div>
+          <h3 className="font-serif font-semibold text-xl text-[#1a1a1a] mb-4 text-center">
+            Core Technologies
+          </h3>
+          <div className="flex flex-wrap justify-center gap-4">
+            {coreSkills.map((skill) => (
+              <SkillBadge key={skill} skill={skill} />
+            ))}
+          </div>
         </div>
 
-        <div className="space-y-12">
-          <div>
-            <h3 className="font-serif font-semibold text-xl text-[#1a1a1a] mb-6 text-center">Core Technologies</h3>
-            <div className="flex flex-wrap justify-center gap-4">
-              {coreSkills.map((skill) => (
-                <SkillBadge key={skill} skill={skill} />
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <h3 className="font-serif font-semibold text-xl text-[#1a1a1a] mb-6 text-center">Additional Skills</h3>
-            <div className="flex flex-wrap justify-center gap-4">
-              {otherSkills.map((skill) => (
-                <SkillBadge key={skill} skill={skill} />
-              ))}
-            </div>
+        <div>
+          <h3 className="font-serif font-semibold text-xl text-[#1a1a1a] mb-4 text-center">
+            Additional Skills
+          </h3>
+          <div className="flex flex-wrap justify-center gap-4">
+            {otherSkills.map((skill) => (
+              <SkillBadge key={skill} skill={skill} />
+            ))}
           </div>
         </div>
       </div>

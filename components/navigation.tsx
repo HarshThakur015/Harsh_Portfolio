@@ -1,21 +1,23 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { Button } from "@/components/ui/button"
+import { useState, useEffect, useMemo } from "react"
 
 const Navigation = () => {
   const [activeSection, setActiveSection] = useState("hero")
   const [isScrolled, setIsScrolled] = useState(false)
 
-  const navItems = [
-    { id: "hero", label: "Home" },
-    { id: "about", label: "About" },
-    { id: "skills", label: "Skills" },
-    { id: "projects", label: "Projects" },
-    { id: "education", label: "Education" },
-    { id: "achievements", label: "Achievements" },
-    { id: "contact", label: "Contact" },
-  ]
+  const navItems = useMemo(
+    () => [
+      { id: "hero", label: "Home" },
+      { id: "about", label: "About" },
+      { id: "skills", label: "Skills" },
+      { id: "projects", label: "Projects" },
+      { id: "education", label: "Education" },
+      { id: "achievements", label: "Achievements" },
+      { id: "contact", label: "Contact" },
+    ],
+    []
+  )
 
   useEffect(() => {
     const handleScroll = () => {
@@ -36,7 +38,7 @@ const Navigation = () => {
 
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+  }, [navItems])
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId)
@@ -51,33 +53,23 @@ const Navigation = () => {
         isScrolled ? "bg-white/90 backdrop-blur-md shadow-lg" : "bg-transparent"
       }`}
     >
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center py-4">
-          <div className="font-serif font-bold text-xl text-[#1a1a1a]">Harsh Thakur</div>
-
-          <div className="hidden md:flex space-x-8">
-            {navItems.map((item) => (
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+        <ul className="flex space-x-6">
+          {navItems.map((item) => (
+            <li key={item.id}>
               <button
-                key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className={`text-sm font-medium transition-colors duration-200 ${
+                className={`font-medium transition-colors ${
                   activeSection === item.id
-                    ? "text-[#b8956a] border-b-2 border-[#b8956a]"
-                    : "text-[#4b5563] hover:text-[#1a1a1a]"
+                    ? "text-[#b8956a] underline"
+                    : "text-[#1a1a1a] hover:text-[#b8956a]"
                 }`}
               >
                 {item.label}
               </button>
-            ))}
-          </div>
-
-          <Button
-            onClick={() => scrollToSection("contact")}
-            className="bg-[#1a1a1a] text-white hover:bg-[#4b5563] transition-colors duration-200"
-          >
-            Get In Touch
-          </Button>
-        </div>
+            </li>
+          ))}
+        </ul>
       </div>
     </nav>
   )

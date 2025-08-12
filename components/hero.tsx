@@ -16,7 +16,7 @@ const Hero = () => {
       <div className="max-w-4xl mx-auto text-center">
         <div className="animate-fade-in-up opacity-0">
           <h1 className="font-serif font-bold text-4xl sm:text-5xl lg:text-6xl text-[#1a1a1a] mb-6">
-            Hi, I'm <span className="text-[#b8956a]">Harsh Thakur</span>
+            Hi, I&apos;m <span className="text-[#b8956a]">Harsh Thakur</span>
           </h1>
         </div>
 
