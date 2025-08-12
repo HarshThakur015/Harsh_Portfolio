@@ -1,7 +1,5 @@
 # Harsh Thakur - Full-Stack Developer Portfolio
 
-![Portfolio Banner](public/profile-photo.jpg)
-
 A modern, responsive portfolio built with [Next.js](https://nextjs.org), [React](https://react.dev), and [Tailwind CSS](https://tailwindcss.com). Showcasing projects, skills, achievements, and contact information.
 
 ---
